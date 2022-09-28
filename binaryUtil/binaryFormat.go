@@ -65,7 +65,6 @@ func ReadBinaryString(s string, data interface{}) (err error) {
 		*data = int64(bytesToUint64(bs))
 	case *uint64:
 		*data = bytesToUint64(bs)
-		//TODO add float number support
 	default:
 		err = ErrTypeUnsupport
 	}
