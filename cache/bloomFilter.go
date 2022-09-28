@@ -43,6 +43,14 @@ func NewBloomFilter(numEntries int, falsePositive float64) *BloomFilter {
 	panic("implement me")
 }
 
+func bitsPerKey(numEntries int, falsePositive float64) int {
+	panic("implement me")
+}
+
+func initFilter(numEntries int, bitsPerKey int) *BloomFilter {
+	panic("implement me")
+}
+
 func Hash(b []byte) uint32 {
 	panic("implement me")
 }
