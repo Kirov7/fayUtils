@@ -118,7 +118,7 @@ func initFilter(numEntries int, bitsPerKey int) *BloomFilter {
 	// bitmap`s []byte length
 	nBytes := (nBits + 7) / 8
 	nBits = nBytes * 8
-	filter := MakeBitmap(nBytes + 1)
+	filter := MakeBitmapWithByteSize(nBytes + 1)
 
 	filter.SetHashNum(uint8(k))
 
