@@ -1,9 +1,12 @@
 package bloom
 
-import "math"
+import (
+	bitmap "github.com/Kirov7/fayUtils/bitmap"
+	"math"
+)
 
 type BloomFilter struct {
-	bitmap Filter
+	bitmap bitmap.Filter
 	k      uint8 // hash Function nums
 }
 
@@ -91,6 +94,10 @@ func NewBloomFilter(numEntries int, falsePositive float64) *BloomFilter {
 	return initFilter(numEntries, bitsPerKey)
 }
 
+func NewBloomFilterDefault(numEntries int) *BloomFilter {
+	return initFilter(numEntries, 10)
+}
+
 func bitsPerKey(numEntries int, falsePositive float64) int {
 	size := -1 * float64(numEntries) * math.Log(falsePositive) / math.Pow(math.Ln2, 2)
 	locs := math.Ceil(size / float64(numEntries))
@@ -118,7 +125,7 @@ func initFilter(numEntries int, bitsPerKey int) *BloomFilter {
 	// bitmap`s []byte length
 	nBytes := (nBits + 7) / 8
 	nBits = nBytes * 8
-	filter := MakeBitmapWithByteSize(nBytes + 1)
+	filter := bitmap.MakeBitmapWithByteSize(nBytes + 1)
 
 	filter.SetHashNum(uint8(k))
 
