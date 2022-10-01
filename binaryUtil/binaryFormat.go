@@ -2,6 +2,7 @@ package binaryUtil
 
 import (
 	"encoding/binary"
+	"reflect"
 	"regexp"
 )
 
@@ -34,9 +35,9 @@ func ToBinaryString(v interface{}) (s string) {
 		s = uint64ToBinaryString(uint64(v))
 	case uint64:
 		s = uint64ToBinaryString(v)
-		//TODO add float number support
 	default:
-		panic(ErrTypeUnsupport)
+		//TODO add float number support
+		panic(ErrTypeUnsupport(reflect.TypeOf(v).String()))
 
 	}
 	return
@@ -66,7 +67,7 @@ func ReadBinaryString(s string, data interface{}) (err error) {
 	case *uint64:
 		*data = bytesToUint64(bs)
 	default:
-		err = ErrTypeUnsupport
+		panic(ErrTypeUnsupport(reflect.TypeOf(data).String()))
 	}
 	return
 }

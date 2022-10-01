@@ -18,8 +18,9 @@ var ErrBadStringFormat = errors.New("bad string format")
 // ErrEmptyString represents a error of empty input string.
 var ErrEmptyString = errors.New("empty string")
 
-var ErrTypeUnsupport = errors.New("data type is unsupported")
-
+func ErrTypeUnsupport(typeName string) error {
+	return errors.New("data type is unsupported: " + typeName)
+}
 func init() {
 	uint8arr[0] = 128
 	uint8arr[1] = 64
