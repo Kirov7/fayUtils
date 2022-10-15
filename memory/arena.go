@@ -10,15 +10,18 @@ var (
 )
 
 type Arena struct {
+	// The size of the has been allocated memory
 	n          uint32
 	shouldGrow bool
-	buf        []byte
+	// The memory space has been applied for
+	buf []byte
 }
 
 func NewArenaDefault(n int64) *Arena {
 	return NewArenaWithMax(n, 5000)
 }
 
+// NewArenaWithMax Initializes the amount of memory space requested and specifies element size limits
 func NewArenaWithMax(n int64, max int) *Arena {
 	MaxElementSize = max
 	return &Arena{
@@ -36,6 +39,7 @@ func (a *Arena) Allocate(sz uint32) uint32 {
 		return offset - sz
 	}
 	//for memory alignment
+
 	if int(offset) > len(a.buf)-MaxElementSize {
 		growBy := uint32(len(a.buf))
 		if growBy > 1<<30 {
@@ -46,19 +50,23 @@ func (a *Arena) Allocate(sz uint32) uint32 {
 		}
 		newBuf := make([]byte, len(a.buf)+int(growBy))
 		if len(a.buf) != copy(newBuf, a.buf) {
-			log.Fatal("assert error")
+			log.Fatal("Error while copying")
 		}
 		a.buf = newBuf
 	}
 	return offset - sz
 }
 
-func (a *Arena) PutElement() uint32 {
-	//todo implement me
-	panic("need to be implement")
+func (a *Arena) PutElement(e []byte) uint32 {
+	keySz := uint32(len(e))
+	offset := a.Allocate(keySz)
+	buf := a.buf[offset : offset+keySz]
+	if len(e) == copy(buf, e) {
+		log.Fatal("Error while copying")
+	}
+	return offset
 }
 
-func (a *Arena) GetElement() uint32 {
-	//todo implement me
-	panic("need to be implement")
+func (a *Arena) GetElement(offset uint32, size uint16) []byte {
+	return a.buf[offset : offset+uint32(size)]
 }
