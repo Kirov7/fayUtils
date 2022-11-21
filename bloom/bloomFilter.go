@@ -70,7 +70,7 @@ func (bf *BloomFilter) AllowKey(k []byte) bool {
 	return already
 }
 
-func (bf *BloomFilter) allow(h uint32) bool {
+func (bf *BloomFilter) Allow(h uint32) bool {
 	if bf == nil {
 		return true
 	}
@@ -81,7 +81,7 @@ func (bf *BloomFilter) allow(h uint32) bool {
 	return already
 }
 
-func (bf *BloomFilter) reset() {
+func (bf *BloomFilter) Reset() {
 	if bf == nil {
 		return
 	}
