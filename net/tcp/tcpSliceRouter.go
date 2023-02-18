@@ -8,7 +8,6 @@ import (
 
 const abortIndex int8 = math.MaxInt8 / 2 //最多 63 个中间件
 
-//知其然也知其所以然
 type TcpHandlerFunc func(*TcpSliceRouterContext)
 
 // router 结构体
